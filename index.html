@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#080b13" />
+<meta name="description" content="A little universe of courage, encouragement and love. Two fighters. One team." />
+<title>The Fighter's Arc — Two Fighters, One Team</title>
+<style>
+:root{
+  --bg:#080b13;--bg2:#0d1320;--panel:rgba(17,25,40,.78);--panel2:rgba(23,34,53,.72);
+  --ink:#f5f7ff;--muted:#aab5c8;--soft:#78869e;--red:#ff4669;--red2:#ff795d;
+  --cyan:#6de8ef;--blue:#6d8dff;--gold:#ffd58a;--line:rgba(176,198,231,.14);
+  --glow:0 0 45px rgba(109,232,239,.15),0 0 90px rgba(255,70,105,.08);
+  --radius:25px;--max:1160px;--mx:50vw;--my:40vh;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:85px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;overflow-x:hidden;line-height:1.6}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-4;background:radial-gradient(ellipse at 12% 8%,rgba(37,70,120,.26),transparent 38%),radial-gradient(ellipse at 84% 30%,rgba(116,32,73,.19),transparent 35%),linear-gradient(180deg,#080b13,#0a101a 48%,#080b13)}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:7;opacity:.17;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.13'/%3E%3C/svg%3E");mix-blend-mode:soft-light}
+button,a{font:inherit}button{color:inherit}a{color:inherit;text-decoration:none}button{cursor:pointer}
+::selection{background:rgba(109,232,239,.3);color:#fff}
+#particleCanvas{position:fixed;inset:0;z-index:-2;pointer-events:none;opacity:.8}
+.grid-backdrop{position:fixed;inset:0;z-index:-3;pointer-events:none;opacity:.35;background-image:linear-gradient(rgba(120,160,210,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(120,160,210,.055) 1px,transparent 1px);background-size:56px 56px;mask-image:linear-gradient(to bottom,black,transparent 87%)}
+.cursor-light{position:fixed;inset:0;z-index:6;pointer-events:none;background:radial-gradient(480px circle at var(--mx) var(--my),rgba(109,232,239,.055),transparent 60%)}
+.progress{height:2px;position:fixed;top:0;left:0;z-index:50;background:linear-gradient(90deg,var(--red),var(--cyan));width:0;box-shadow:0 0 12px var(--cyan)}
+.topbar{position:fixed;top:0;left:0;right:0;z-index:40;padding:15px clamp(16px,4vw,48px);display:flex;align-items:center;justify-content:space-between;background:linear-gradient(180deg,rgba(8,11,19,.92),rgba(8,11,19,.3));backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.045)}
+.brand{display:flex;gap:11px;align-items:center;font-size:.73rem;letter-spacing:.2em;font-weight:850;text-transform:uppercase}
+.brand-mark{width:28px;height:28px;border:1px solid rgba(109,232,239,.55);border-radius:9px;display:grid;place-items:center;transform:rotate(45deg);box-shadow:0 0 16px rgba(109,232,239,.16)}.brand-mark span{transform:rotate(-45deg);color:var(--cyan);font-size:14px}
+.nav{display:flex;align-items:center;gap:22px}.nav a{font-size:.72rem;letter-spacing:.13em;text-transform:uppercase;color:#a9b6ca;transition:.25s}.nav a:hover{color:#fff;text-shadow:0 0 14px var(--cyan)}
+.top-actions{display:flex;gap:8px}.icon-btn{border:1px solid var(--line);background:rgba(255,255,255,.035);width:37px;height:37px;border-radius:12px;color:#cbd5e7;display:grid;place-items:center;transition:.25s}.icon-btn:hover{border-color:rgba(109,232,239,.5);color:var(--cyan);transform:translateY(-2px)}
+.menu-btn{display:none}
+.wrap{width:min(var(--max),calc(100% - 40px));margin:auto}.section{position:relative;padding:112px 0;scroll-margin-top:72px}.section-kicker{display:flex;align-items:center;gap:12px;color:var(--cyan);font-size:.68rem;font-weight:850;letter-spacing:.24em;text-transform:uppercase;margin-bottom:15px}.section-kicker::before{content:"";width:28px;height:1px;background:var(--cyan);box-shadow:0 0 10px var(--cyan)}
+h1,h2,h3,p{margin-top:0}h1,h2,h3{line-height:1.02}h2{font-size:clamp(2.1rem,5vw,4.3rem);letter-spacing:-.055em;margin-bottom:18px}h3{letter-spacing:-.025em} .lead{max-width:670px;color:var(--muted);font-size:1.02rem;line-height:1.8}
+.gradient-text{background:linear-gradient(100deg,#fff 4%,#baf8fa 43%,#ff8293 95%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.eyebrow{font-size:.69rem;letter-spacing:.24em;text-transform:uppercase;color:var(--soft);font-weight:800}
+.btn{position:relative;overflow:hidden;display:inline-flex;justify-content:center;align-items:center;gap:11px;padding:14px 22px;border:1px solid rgba(109,232,239,.46);border-radius:14px;background:linear-gradient(110deg,rgba(109,232,239,.15),rgba(109,141,255,.13));color:#f6ffff;font-weight:800;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;box-shadow:0 7px 30px rgba(33,105,132,.12);transition:transform .25s,border-color .25s,box-shadow .25s}.btn::before{content:"";position:absolute;inset:0;transform:translateX(-110%);background:linear-gradient(100deg,transparent,rgba(255,255,255,.15),transparent);transition:transform .6s}.btn:hover{transform:translateY(-3px);border-color:var(--cyan);box-shadow:0 12px 40px rgba(109,232,239,.16)}.btn:hover::before{transform:translateX(110%)}.btn.primary{background:linear-gradient(110deg,#ff4669,#ff795d);border-color:transparent;box-shadow:0 9px 35px rgba(255,70,105,.2)}.btn.primary:hover{box-shadow:0 12px 42px rgba(255,70,105,.35)}.btn.ghost{background:rgba(255,255,255,.035);border-color:var(--line);color:#c5cede}.btn.small{padding:10px 14px;font-size:.68rem;border-radius:11px}.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+/* intro */
+.intro{position:fixed;inset:0;z-index:100;display:grid;place-items:center;background:radial-gradient(ellipse at 50% 44%,#17243a,#080b13 65%);transition:opacity .8s,visibility .8s;overflow:hidden}.intro.out{opacity:0;visibility:hidden}.intro::before,.intro::after{content:"";position:absolute;width:min(75vw,700px);height:min(75vw,700px);border:1px solid rgba(109,232,239,.15);border-radius:50%;animation:orbit 18s linear infinite}.intro::after{width:min(58vw,540px);height:min(58vw,540px);border-color:rgba(255,70,105,.2);animation-direction:reverse;animation-duration:24s}.intro-core{text-align:center;position:relative;z-index:2;width:min(90%,640px);padding:35px}.intro-symbol{width:68px;height:68px;margin:0 auto 30px;border:1px solid rgba(109,232,239,.55);border-radius:20px;display:grid;place-items:center;transform:rotate(45deg);box-shadow:0 0 45px rgba(109,232,239,.16),inset 0 0 25px rgba(109,232,239,.08)}.intro-symbol span{transform:rotate(-45deg);font-size:27px;color:var(--cyan)}.intro h1{font-size:clamp(2.6rem,8vw,6.6rem);letter-spacing:-.08em;margin:0 0 16px}.intro p{color:#a8b6ca;letter-spacing:.16em;text-transform:uppercase;font-size:.72rem}.intro .btn{margin-top:28px}.intro-code{font:600 .65rem ui-monospace,monospace;letter-spacing:.17em;color:#6e819f;margin-top:32px}
+@keyframes orbit{to{transform:rotate(360deg)}}
+/* hero */
+.hero{min-height:100svh;padding:150px 0 85px;display:flex;align-items:center;position:relative;overflow:hidden}.hero::before{content:"";position:absolute;right:-15%;top:9%;width:min(70vw,850px);height:min(70vw,850px);border-radius:50%;background:radial-gradient(circle,rgba(58,128,164,.18),rgba(91,36,76,.1) 42%,transparent 70%);filter:blur(12px)}.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:35px;position:relative;z-index:1}.hero-copy{position:relative;z-index:3}.hero .eyebrow{color:var(--cyan);margin-bottom:22px}.hero h1{font-size:clamp(3.6rem,8vw,7.6rem);letter-spacing:-.09em;line-height:.88;margin:0 0 28px}.hero h1 span{display:block}.hero h1 .outline{-webkit-text-stroke:1px rgba(215,232,255,.65);color:transparent}.hero-sub{max-width:530px;color:#aab7ca;font-size:1.02rem;line-height:1.8;margin-bottom:28px}.hero-actions{display:flex;flex-wrap:wrap;gap:12px}.hero-meta{display:flex;gap:23px;flex-wrap:wrap;margin-top:37px;color:#76869f;font-size:.67rem;letter-spacing:.12em;text-transform:uppercase}.hero-meta strong{color:#dce9f9;font-weight:750}
+.arena-art{position:relative;min-height:560px;display:grid;place-items:center;isolation:isolate}.arena-ring{position:absolute;width:min(100%,530px);aspect-ratio:1;border-radius:50%;border:1px solid rgba(109,232,239,.25);box-shadow:0 0 90px rgba(109,232,239,.07),inset 0 0 80px rgba(109,232,239,.04);animation:slowSpin 36s linear infinite}.arena-ring::before,.arena-ring::after{content:"";position:absolute;inset:8%;border-radius:50%;border:1px dashed rgba(255,70,105,.34)}.arena-ring::after{inset:19%;border-style:solid;border-color:rgba(255,255,255,.07)}.arena-ring .ring-label{position:absolute;top:5%;left:50%;transform:translateX(-50%);background:var(--bg);padding:4px 12px;color:var(--cyan);font:700 .6rem ui-monospace,monospace;letter-spacing:.2em}.arena-core{position:relative;width:min(72%,370px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 48% 45%,rgba(109,232,239,.14),rgba(255,70,105,.05) 46%,transparent 70%);display:grid;place-items:center;animation:float 6s ease-in-out infinite}.arena-core svg{width:83%;height:83%;filter:drop-shadow(0 15px 35px rgba(0,0,0,.5))}.scan-line{position:absolute;left:8%;right:8%;height:1px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);box-shadow:0 0 12px var(--cyan);animation:scan 4s ease-in-out infinite}.orbit-dot{position:absolute;width:12px;height:12px;border-radius:50%;background:var(--red);box-shadow:0 0 22px var(--red);top:21%;right:14%;animation:pulse 1.7s infinite}.floating-tag{position:absolute;border:1px solid var(--line);border-radius:14px;padding:11px 14px;background:rgba(9,15,26,.78);backdrop-filter:blur(12px);font-size:.62rem;letter-spacing:.13em;text-transform:uppercase;color:#b8c8dc;box-shadow:var(--glow)}.floating-tag strong{display:block;color:#fff;font-size:.83rem;margin-top:4px;letter-spacing:.04em}.tag-a{top:16%;left:0}.tag-b{bottom:17%;right:-1%}.tag-c{bottom:8%;left:5%;border-color:rgba(255,70,105,.25)}
+@keyframes slowSpin{to{transform:rotate(360deg)}}@keyframes float{50%{transform:translateY(-13px)}}@keyframes scan{0%,100%{top:22%;opacity:0}35%,65%{top:78%;opacity:.8}}@keyframes pulse{50%{transform:scale(1.65);opacity:.6}}
+.scroll-cue{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:10px;color:#67758d;font-size:.61rem;letter-spacing:.22em;text-transform:uppercase}.scroll-cue span{display:block;width:1px;height:32px;background:linear-gradient(var(--cyan),transparent);animation:cue 1.7s infinite}@keyframes cue{50%{transform:scaleY(.55);opacity:.5}}
+/* cards and common layouts */
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:42px}.section-head .lead{max-width:410px;margin-bottom:5px}.panel{background:linear-gradient(145deg,rgba(22,33,52,.83),rgba(11,17,29,.78));border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 20px 80px rgba(0,0,0,.16);backdrop-filter:blur(15px)}.shine-card{position:relative;overflow:hidden;transform-style:preserve-3d;transition:transform .35s,border-color .35s,box-shadow .35s}.shine-card::before{content:"";position:absolute;inset:-1px;background:radial-gradient(360px circle at var(--card-x,50%) var(--card-y,50%),rgba(109,232,239,.1),transparent 50%);opacity:0;transition:opacity .35s;pointer-events:none}.shine-card:hover::before{opacity:1}.shine-card:hover{border-color:rgba(109,232,239,.32);box-shadow:0 25px 70px rgba(0,0,0,.27),0 0 32px rgba(109,232,239,.07)}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px}.mission-card{padding:29px;min-height:300px;display:flex;flex-direction:column;justify-content:space-between}.mission-top{display:flex;justify-content:space-between;align-items:center}.mission-icon{width:48px;height:48px;border-radius:15px;display:grid;place-items:center;font-size:22px;background:rgba(109,232,239,.09);border:1px solid rgba(109,232,239,.2)}.mission-card.you .mission-icon{background:rgba(255,70,105,.09);border-color:rgba(255,70,105,.25)}.badge{font:750 .62rem ui-monospace,monospace;letter-spacing:.16em;color:var(--cyan);border:1px solid rgba(109,232,239,.22);border-radius:100px;padding:7px 10px}.you .badge{color:#ff8b9f;border-color:rgba(255,70,105,.25)}.mission-card h3{font-size:1.7rem;margin:25px 0 10px}.mission-card p{color:var(--muted);font-size:.9rem;line-height:1.75;margin:0;max-width:450px}.mission-footer{border-top:1px solid var(--line);margin-top:26px;padding-top:17px;display:flex;justify-content:space-between;align-items:center;color:#8291a8;font-size:.67rem;letter-spacing:.13em;text-transform:uppercase}.mission-footer strong{color:#eaf4ff;font-size:.76rem}
+.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}.stat-card{padding:22px;min-height:160px}.stat-symbol{font-size:1.3rem;color:var(--cyan)}.stat-card h3{font-size:1.03rem;margin:14px 0 6px}.stat-card p{font-size:.79rem;color:var(--muted);margin:0}.stat-bar{height:3px;background:rgba(255,255,255,.08);margin-top:18px;border-radius:10px;overflow:hidden}.stat-bar span{display:block;height:100%;width:var(--w);background:linear-gradient(90deg,var(--cyan),var(--blue));box-shadow:0 0 12px var(--cyan);transform-origin:left;animation:barIn 1.4s ease both}@keyframes barIn{from{transform:scaleX(0)}}
+/* protocol */
+.protocol-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:20px;align-items:stretch}.protocol-visual{min-height:430px;position:relative;display:grid;place-items:center;overflow:hidden}.crosshair{width:250px;height:250px;border:1px solid rgba(109,232,239,.26);border-radius:50%;position:relative;display:grid;place-items:center}.crosshair::before,.crosshair::after{content:"";position:absolute;background:rgba(109,232,239,.15)}.crosshair::before{width:1px;height:130%}.crosshair::after{height:1px;width:130%}.target-inner{width:160px;height:160px;border-radius:50%;border:1px dashed rgba(255,70,105,.5);display:grid;place-items:center;position:relative;z-index:1;background:radial-gradient(circle,rgba(255,70,105,.1),transparent 70%);font-size:3rem}.target-caption{position:absolute;bottom:28px;left:28px;color:#8393aa;font:700 .63rem ui-monospace,monospace;letter-spacing:.18em}.protocol-copy{padding:35px;display:flex;flex-direction:column;justify-content:center}.protocol-copy h3{font-size:1.8rem;margin:0 0 13px}.protocol-copy p{color:var(--muted);font-size:.91rem;line-height:1.85}.protocol-lines{display:grid;gap:10px;margin:17px 0 25px}.protocol-line{display:flex;gap:13px;align-items:center;color:#d9e4f1;font-size:.82rem}.protocol-line b{font:700 .65rem ui-monospace,monospace;color:var(--cyan);border:1px solid rgba(109,232,239,.22);border-radius:8px;padding:5px 7px}
+/* breath */
+.breath-layout{display:grid;grid-template-columns:1fr .95fr;gap:20px}.breath-card{padding:31px;display:flex;flex-direction:column;justify-content:space-between;min-height:420px}.breath-head{display:flex;justify-content:space-between;gap:15px;align-items:start}.breath-head h3{font-size:1.55rem;margin:0 0 8px}.breath-head p{color:var(--muted);font-size:.85rem;margin:0}.breath-orb-wrap{display:grid;place-items:center;flex:1;min-height:215px}.breath-orb{width:145px;height:145px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#d8ffff, #6de8ef 17%,rgba(109,232,239,.15) 47%,rgba(109,232,239,.025) 70%);box-shadow:0 0 35px rgba(109,232,239,.28),inset 0 0 28px rgba(255,255,255,.22);display:grid;place-items:center;transition:transform 1s ease,filter .5s}.breath-orb.inhale{transform:scale(1.48);filter:hue-rotate(10deg)}.breath-orb.hold{transform:scale(1.48);filter:brightness(1.2)}.breath-orb.exhale{transform:scale(.88)}.breath-orb span{font-size:.67rem;text-transform:uppercase;letter-spacing:.2em;color:#06202b;font-weight:900;text-align:center}.breath-footer{display:flex;justify-content:space-between;align-items:center;gap:14px}.breath-status{font:700 .7rem ui-monospace,monospace;letter-spacing:.13em;color:var(--cyan)}.message-card{padding:35px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}.message-card::after{content:"“";position:absolute;right:25px;top:-42px;font:15rem Georgia,serif;color:rgba(109,232,239,.055)}.message-card blockquote{font-size:clamp(1.2rem,2.4vw,1.65rem);line-height:1.5;letter-spacing:-.025em;margin:0 0 20px;position:relative;z-index:1}.message-card p{color:var(--muted);font-size:.86rem;margin:0}.micro-label{font:750 .65rem ui-monospace,monospace;color:var(--cyan);letter-spacing:.2em;text-transform:uppercase;margin-bottom:24px}
+/* outcome */
+.outcomes{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}.outcome-btn{text-align:left;padding:23px;border-radius:19px;min-height:210px;background:rgba(255,255,255,.025);border:1px solid var(--line);transition:.28s}.outcome-btn:hover,.outcome-btn.active{background:rgba(109,232,239,.07);border-color:rgba(109,232,239,.4);transform:translateY(-5px);box-shadow:0 15px 40px rgba(0,0,0,.18)}.outcome-btn .emoji{font-size:1.65rem;display:block;margin-bottom:20px}.outcome-btn strong{display:block;font-size:1rem;margin-bottom:8px}.outcome-btn small{color:var(--muted);font-size:.78rem;line-height:1.6;display:block}.outcome-result{margin-top:16px;padding:25px 28px;border-radius:18px;border:1px solid rgba(255,70,105,.2);background:linear-gradient(110deg,rgba(255,70,105,.08),rgba(109,232,239,.045));display:none}.outcome-result.show{display:block;animation:rise .55s both}.outcome-result h3{font-size:1.35rem;margin:0 0 8px}.outcome-result p{color:#bdc9d9;margin:0;font-size:.9rem;line-height:1.8}
+/* exam toolkit */
+.toolkit-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:18px}.toolkit-main{padding:30px}.toolkit-main h3{font-size:1.55rem;margin:0 0 8px}.toolkit-main>p{font-size:.86rem;color:var(--muted);margin-bottom:24px}.timer-display{font-size:clamp(3rem,7vw,5rem);letter-spacing:-.08em;font-variant-numeric:tabular-nums;font-weight:800;text-align:center;padding:22px 0 10px;background:linear-gradient(90deg,#fff,var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}.timer-label{text-align:center;color:var(--soft);font:700 .66rem ui-monospace,monospace;letter-spacing:.2em;text-transform:uppercase}.timer-controls{display:flex;justify-content:center;gap:9px;flex-wrap:wrap;margin:20px 0}.timer-modes{display:flex;justify-content:center;gap:7px}.timer-mode{background:rgba(255,255,255,.035);border:1px solid var(--line);border-radius:9px;padding:7px 11px;font-size:.66rem;letter-spacing:.08em;color:#9ba9bf}.timer-mode.active{color:var(--cyan);border-color:rgba(109,232,239,.35);background:rgba(109,232,239,.08)}.timer-note{text-align:center;font-size:.7rem;color:#8291a8;margin:20px 0 0}.toolkit-side{display:grid;gap:12px}.tool-tip{padding:20px;display:flex;gap:15px;align-items:flex-start}.tool-tip .tip-icon{width:37px;height:37px;flex:0 0 37px;border-radius:12px;display:grid;place-items:center;background:rgba(255,70,105,.09);color:#ff8798}.tool-tip h4{margin:0 0 5px;font-size:.9rem}.tool-tip p{margin:0;color:var(--muted);font-size:.78rem;line-height:1.65}
+/* shared team */
+.team-banner{position:relative;overflow:hidden;padding:48px;border-radius:30px;border:1px solid rgba(109,232,239,.22);background:linear-gradient(115deg,rgba(22,42,59,.92),rgba(32,19,39,.9));box-shadow:var(--glow)}.team-banner::before{content:"";position:absolute;right:-80px;top:-180px;width:430px;height:430px;border:1px solid rgba(109,232,239,.16);border-radius:50%;box-shadow:0 0 0 36px rgba(109,232,239,.025),0 0 0 72px rgba(109,232,239,.018)}.team-topline{display:flex;justify-content:space-between;align-items:center;gap:15px;position:relative}.team-label{font:750 .65rem ui-monospace,monospace;color:var(--cyan);letter-spacing:.19em}.team-title{text-align:center;font-size:clamp(2rem,6vw,4.5rem);letter-spacing:-.07em;margin:40px 0 12px;position:relative}.team-sub{text-align:center;max-width:650px;margin:0 auto;color:#b7c4d6;font-size:.95rem;line-height:1.8;position:relative}.versus{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:17px;margin:42px auto 30px;max-width:780px;position:relative}.fighter-side{padding:22px;border:1px solid var(--line);border-radius:17px;background:rgba(4,10,18,.34)}.fighter-side span{font:750 .6rem ui-monospace,monospace;letter-spacing:.17em;color:var(--soft)}.fighter-side strong{display:block;font-size:1.25rem;margin:5px 0}.fighter-side small{color:#9eacc1}.vs{font:900 .78rem ui-monospace,monospace;color:var(--red);letter-spacing:.1em}.team-foot{text-align:center;color:#d4e1ef;font-size:.78rem;letter-spacing:.05em;position:relative}.team-foot strong{color:var(--cyan)}
+/* powerups */
+.power-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}.power-card{min-height:195px;padding:23px;text-align:left;border-radius:19px;background:rgba(255,255,255,.025);border:1px solid var(--line);transition:.3s;position:relative;overflow:hidden}.power-card:hover{transform:translateY(-6px);border-color:rgba(255,70,105,.35);background:rgba(255,70,105,.045)}.power-card .power-ico{font-size:1.55rem}.power-card h3{font-size:1.03rem;margin:17px 0 6px}.power-card p{color:var(--muted);font-size:.77rem;line-height:1.6;margin:0}.power-card::after{content:"TAP TO ACTIVATE ↗";position:absolute;bottom:17px;right:18px;font:700 .55rem ui-monospace,monospace;letter-spacing:.1em;color:#7e8da5;opacity:.8}.power-result{min-height:80px;margin-top:15px;padding:22px 25px;border-radius:16px;border:1px solid rgba(109,232,239,.2);background:rgba(109,232,239,.045);color:#dbe8f7;display:flex;align-items:center;font-size:.95rem;line-height:1.7}
+/* arcade */
+.arcade-layout{display:grid;grid-template-columns:1fr .8fr;gap:18px;align-items:stretch}.game-panel{padding:24px}.game-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}.game-top h3{font-size:1.2rem;margin:0}.score{font:750 .72rem ui-monospace,monospace;color:var(--cyan)}#gameCanvas{display:block;width:100%;height:260px;background:radial-gradient(ellipse at 50% 100%,rgba(49,83,122,.35),rgba(5,10,18,.9) 65%);border:1px solid rgba(109,232,239,.15);border-radius:16px;touch-action:none}.game-controls{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:14px;color:#8b9ab0;font-size:.71rem}.game-copy{padding:30px;display:flex;flex-direction:column;justify-content:center}.game-copy h3{font-size:1.5rem;margin:0 0 10px}.game-copy p{color:var(--muted);font-size:.85rem;line-height:1.8}.game-copy .mini-note{font-size:.7rem;color:#7c8ba2;margin-top:8px}
+/* letters */
+.letter-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}.letter-card{padding:25px;min-height:165px;text-align:left;position:relative;overflow:hidden;border-radius:18px;background:linear-gradient(140deg,rgba(255,255,255,.045),rgba(255,255,255,.015));border:1px solid var(--line);transition:.3s}.letter-card:hover{transform:translateY(-4px);border-color:rgba(255,213,138,.4)}.letter-card .letter-no{font:750 .61rem ui-monospace,monospace;color:var(--gold);letter-spacing:.17em}.letter-card h3{font-size:1.1rem;margin:17px 0 6px}.letter-card p{font-size:.76rem;color:var(--muted);margin:0}.letter-card::after{content:"↗";position:absolute;right:23px;top:21px;color:var(--gold);font-size:1.1rem}.letter-modal{position:fixed;inset:0;z-index:90;display:none;place-items:center;padding:20px;background:rgba(2,5,11,.82);backdrop-filter:blur(14px)}.letter-modal.show{display:grid;animation:fadeIn .3s}.letter-paper{width:min(620px,100%);padding:clamp(25px,5vw,48px);border:1px solid rgba(255,213,138,.25);border-radius:21px;background:linear-gradient(145deg,#172133,#0d1420);box-shadow:0 30px 100px rgba(0,0,0,.6);position:relative;animation:rise .45s both}.letter-paper .close{position:absolute;right:17px;top:17px}.letter-paper h3{font-size:1.8rem;margin:18px 0}.letter-paper p{color:#c0ccdc;line-height:1.9;font-size:.95rem}.letter-sign{color:var(--gold)!important;font-style:italic;margin-top:26px}
+/* final */
+.final-section{padding:130px 0 110px;overflow:hidden}.final-box{position:relative;overflow:hidden;text-align:center;padding:clamp(35px,7vw,80px) 25px;border-radius:32px;background:radial-gradient(ellipse at 50% 10%,rgba(109,232,239,.13),transparent 48%),linear-gradient(145deg,#101d2d,#12101d 75%);border:1px solid rgba(109,232,239,.18)}.final-box::before,.final-box::after{content:"";position:absolute;left:50%;top:50%;width:440px;height:440px;border:1px solid rgba(109,232,239,.12);border-radius:50%;transform:translate(-50%,-50%);pointer-events:none}.final-box::after{width:620px;height:620px;border-color:rgba(255,70,105,.1)}.final-box>*{position:relative;z-index:1}.final-box h2{font-size:clamp(2.6rem,7vw,5.8rem);margin:18px 0}.final-letter{max-width:700px;margin:24px auto 30px;color:#c0ccdc;font-size:1rem;line-height:2}.final-sign{font-family:Georgia,serif;font-style:italic;font-size:1.5rem;color:var(--gold)}.end-code{margin-top:35px;font:700 .62rem ui-monospace,monospace;letter-spacing:.18em;color:#788ba5}
+.footer{padding:24px 20px 35px;text-align:center;color:#56647b;font-size:.65rem;letter-spacing:.12em;text-transform:uppercase}.footer strong{color:#9badc6}
+/* secret */
+.secret-star{position:fixed;right:20px;bottom:19px;z-index:35;width:43px;height:43px;border:1px solid rgba(255,213,138,.2);background:rgba(9,15,26,.78);backdrop-filter:blur(12px);border-radius:50%;color:var(--gold);font-size:18px;box-shadow:0 0 20px rgba(255,213,138,.08);transition:.3s}.secret-star:hover{transform:rotate(45deg) scale(1.1);box-shadow:0 0 25px rgba(255,213,138,.22)}
+/* transitions and reveal */
+#wipe{position:fixed;inset:0;z-index:80;pointer-events:none;transform:scaleY(0);transform-origin:bottom;background:linear-gradient(145deg,#14283b,#401b32);}
+#wipe.go{animation:wipe .72s cubic-bezier(.7,0,.2,1)}@keyframes wipe{0%{transform:scaleY(0);transform-origin:bottom}45%{transform:scaleY(1);transform-origin:bottom}55%{transform:scaleY(1);transform-origin:top}100%{transform:scaleY(0);transform-origin:top}}
+.reveal{opacity:0;transform:translateY(30px);filter:blur(7px);transition:opacity .85s,transform .85s cubic-bezier(.2,.7,.2,1),filter .85s}.reveal.in{opacity:1;transform:translateY(0);filter:blur(0)}.stagger>*{transition-delay:calc(var(--i,0)*90ms)}
+@keyframes rise{from{opacity:0;transform:translateY(20px) scale(.98)}to{opacity:1;transform:none}}@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.toast{position:fixed;left:50%;bottom:25px;transform:translate(-50%,20px);z-index:110;opacity:0;pointer-events:none;padding:12px 18px;border-radius:12px;background:#e5ffff;color:#09151c;font-size:.78rem;font-weight:800;box-shadow:0 10px 35px rgba(0,0,0,.3);transition:.3s}.toast.show{opacity:1;transform:translate(-50%,0)}
+.confetti{position:fixed;z-index:120;top:-20px;width:8px;height:13px;pointer-events:none;animation:confettiFall var(--dur,2s) linear forwards;transform:rotate(var(--rot,0deg))}@keyframes confettiFall{to{transform:translate3d(var(--dx),110vh,0) rotate(760deg);opacity:.1}}
+@media(max-width:900px){.hero-grid{grid-template-columns:1fr}.hero-copy{max-width:760px}.arena-art{min-height:430px;margin-top:-5px}.arena-ring{width:min(78vw,500px)}.section-head{display:block}.section-head .lead{margin-top:15px}.protocol-grid,.breath-layout,.toolkit-grid,.arcade-layout{grid-template-columns:1fr}.protocol-visual{min-height:330px}.toolkit-side{grid-template-columns:1fr 1fr}.game-copy{padding:26px}.stat-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:650px){.wrap{width:min(100% - 30px,var(--max))}.section{padding:78px 0}.topbar{padding:12px 15px}.brand{font-size:.62rem}.nav{display:none;position:absolute;top:62px;left:12px;right:12px;padding:18px;border:1px solid var(--line);border-radius:17px;background:rgba(8,13,23,.96);backdrop-filter:blur(15px);flex-direction:column;align-items:flex-start;gap:17px}.nav.open{display:flex}.menu-btn{display:grid}.hero{padding:126px 0 72px;min-height:auto}.hero h1{font-size:clamp(3.3rem,17vw,5.5rem)}.hero-sub{font-size:.92rem}.hero-meta{gap:13px}.arena-art{min-height:350px}.floating-tag{font-size:.53rem;padding:9px 10px}.tag-a{left:-3%}.tag-b{right:-3%}.tag-c{left:0}.two-col{grid-template-columns:1fr}.mission-card{min-height:270px;padding:24px}.stat-grid{grid-template-columns:repeat(2,1fr)}.stat-card{padding:17px;min-height:145px}.protocol-visual{min-height:280px}.crosshair{width:205px;height:205px}.target-inner{width:130px;height:130px}.protocol-copy,.breath-card,.message-card,.toolkit-main,.game-panel,.game-copy{padding:23px}.breath-card{min-height:390px}.outcomes{grid-template-columns:1fr}.outcome-btn{min-height:0;padding:18px}.outcome-btn .emoji{margin-bottom:10px}.toolkit-side{grid-template-columns:1fr}.team-banner{padding:27px 19px}.team-topline{align-items:flex-start}.versus{grid-template-columns:1fr;gap:10px;margin:28px auto}.vs{text-align:center}.fighter-side{padding:16px}.fighter-side strong{font-size:1.1rem}.team-title{margin:28px 0 10px}.power-grid{grid-template-columns:repeat(2,1fr)}.power-card{min-height:190px;padding:17px}.power-card::after{font-size:.47rem;right:10px;bottom:12px}.arcade-layout{gap:12px}.game-controls{align-items:flex-start;flex-direction:column}.letter-grid{grid-template-columns:1fr}.letter-card{min-height:140px}.final-section{padding:85px 0}.final-box{border-radius:23px}.secret-star{right:12px;bottom:12px;width:39px;height:39px}.scroll-cue{display:none}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.reveal{opacity:1;transform:none;filter:none}}
+</style>
+</head>
+<body>
+<div class="grid-backdrop" aria-hidden="true"></div><canvas id="particleCanvas" aria-hidden="true"></canvas><div class="cursor-light" aria-hidden="true"></div><div class="progress" id="progress"></div><div id="wipe"></div>
+
+<div class="intro" id="intro" role="dialog" aria-label="Welcome to The Fighter's Arc">
+  <div class="intro-core">
+    <div class="intro-symbol"><span>✦</span></div>
+    <div class="eyebrow">A transmission made just for you</div>
+    <h1><span class="gradient-text">THE FIGHTER'S</span><br><span class="outline">ARC.</span></h1>
+    <p>Two fighters. Different arenas. One team.</p>
+    <button class="btn primary" id="enterBtn">Enter your arena <span>↗</span></button>
+    <div class="intro-code">SIGNAL LOCKED · RECIPIENT: SHUNUU · READY WHEN YOU ARE</div>
+  </div>
+</div>
+
+<header class="topbar">
+  <a class="brand" href="#home" aria-label="The Fighter's Arc home"><span class="brand-mark"><span>✦</span></span><span>THE FIGHTER'S ARC</span></a>
+  <nav class="nav" id="nav"><a href="#missions">Missions</a><a href="#fight">Fight mode</a><a href="#reset">Reset</a><a href="#exams">Finals</a><a href="#team">Our team</a><a href="#letters">Letters</a></nav>
+  <div class="top-actions"><button class="icon-btn" id="soundBtn" aria-label="Toggle sound effects" title="Sound effects off">♪</button><button class="icon-btn menu-btn" id="menuBtn" aria-label="Open navigation">☰</button></div>
+</header>
+
+<main>
+<section class="hero" id="home">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <div class="eyebrow">TRANSMISSION 001 · FOR MY SHUNUU</div>
+      <h1><span class="gradient-text">YOU'VE</span><span class="outline">GOT THIS.</span></h1>
+      <p class="hero-sub">A little arena of courage for you — for the Taekwondo tournament tomorrow and your finals starting on the 23rd. You have trained for this. You are capable of this. You do not have to be perfect to make me proud.</p>
+      <div class="hero-actions"><a class="btn primary magnetic" href="#fight">Start your fighter arc <span>↗</span></a><a class="btn ghost" href="#team">Our two-player mission <span>⌁</span></a></div>
+      <div class="hero-meta"><span><strong>22 NOV</strong> · TOURNAMENT DAY</span><span><strong>23 NOV</strong> · FINALS BEGIN</span><span><strong>∞</strong> · IN MY CORNER</span></div>
+    </div>
+    <div class="arena-art" aria-label="Abstract glowing arena illustration">
+      <div class="arena-ring"><span class="ring-label">COURAGE / DISCIPLINE / HEART</span></div>
+      <div class="arena-core">
+        <div class="scan-line"></div><span class="orbit-dot"></span>
+        <svg viewBox="0 0 420 420" role="img" aria-label="Abstract silhouette of a martial artist in a high kick pose">
+          <defs><linearGradient id="sil" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#c5ffff"/><stop offset=".48" stop-color="#6de8ef"/><stop offset="1" stop-color="#ff4669"/></linearGradient><filter id="blurGlow"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+          <circle cx="210" cy="205" r="156" fill="none" stroke="rgba(109,232,239,.13)" stroke-width="1" stroke-dasharray="5 10"/>
+          <g fill="none" stroke="url(#sil)" stroke-linecap="round" stroke-linejoin="round" filter="url(#blurGlow)">
+            <path d="M207 124 C191 151 185 177 197 203 L226 237" stroke-width="26"/>
+            <path d="M203 142 L150 104 L110 65" stroke-width="19"/>
+            <path d="M204 147 L251 114 L292 101" stroke-width="18"/>
+            <path d="M220 232 L273 205 L332 139 L377 112" stroke-width="25"/>
+            <path d="M221 234 L191 292 L178 354" stroke-width="27"/>
+            <path d="M180 352 L148 367" stroke-width="17"/>
+          </g>
+          <circle cx="205" cy="91" r="27" fill="url(#sil)" filter="url(#blurGlow)"/>
+          <path d="M200 162 L230 174" stroke="#ff9ba9" stroke-width="6" stroke-linecap="round"/>
+          <path d="M91 64 L61 42 M299 95 L331 77 M365 108 L395 94" stroke="#6de8ef" stroke-width="2" opacity=".6" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="floating-tag tag-a">PLAYER 01<strong>SHUNUU · THE FIGHTER</strong></div>
+      <div class="floating-tag tag-b">CURRENT MODE<strong>COURAGE: ONLINE</strong></div>
+      <div class="floating-tag tag-c">SPECIAL ABILITY<strong>NEVER GIVES UP</strong></div>
+    </div>
+  </div>
+  <div class="scroll-cue">SCROLL TO BEGIN <span></span></div>
+</section>
+
+<section class="section" id="missions"><div class="wrap">
+  <div class="section-head reveal"><div><div class="section-kicker">01 / THE NEXT TWO DAYS</div><h2>Two big missions.<br><span class="gradient-text">One strong spirit.</span></h2></div><p class="lead">You don't have to carry tomorrow and the next day all at once. Just meet each moment as it comes. One match. One paper. One step at a time.</p></div>
+  <div class="two-col stagger">
+    <article class="panel mission-card shine-card reveal" style="--i:0"><div><div class="mission-top"><div class="mission-icon">🥋</div><span class="badge">MISSION 01 · YOUR ARENA</span></div><h3>Taekwondo tournament</h3><p>Tomorrow, step onto that mat with your training behind you and your focus in front of you. Breathe, trust your practice, respect your opponent and give your best. You belong there.</p></div><div class="mission-footer"><span>22 NOVEMBER</span><strong>FIGHT WITH HEART ↗</strong></div></article>
+    <article class="panel mission-card you shine-card reveal" style="--i:1"><div><div class="mission-top"><div class="mission-icon">📚</div><span class="badge">MISSION 02 · YOUR NEXT ARENA</span></div><h3>Final examinations</h3><p>From the 23rd, take it paper by paper. You don't need to think about the whole exam season in one sitting. Prepare, rest, trust what you've learned and take it one question at a time.</p></div><div class="mission-footer"><span>FROM 23 NOVEMBER</span><strong>STEADY & FOCUSED ↗</strong></div></article>
+  </div>
+  <div class="stat-grid stagger" style="margin-top:17px">
+    <article class="panel stat-card shine-card reveal" style="--i:0"><div class="stat-symbol">✦</div><h3>Discipline</h3><p>Built through every day you showed up.</p><div class="stat-bar"><span style="--w:100%"></span></div></article>
+    <article class="panel stat-card shine-card reveal" style="--i:1"><div class="stat-symbol">⚡</div><h3>Determination</h3><p>The part of you that keeps trying.</p><div class="stat-bar"><span style="--w:100%"></span></div></article>
+    <article class="panel stat-card shine-card reveal" style="--i:2"><div class="stat-symbol">♡</div><h3>Heart</h3><p>The thing that makes your strength yours.</p><div class="stat-bar"><span style="--w:100%"></span></div></article>
+  </div>
+</div></section>
+
+<section class="section" id="fight"><div class="wrap">
+  <div class="section-head reveal"><div><div class="section-kicker">02 / FIGHTER MODE</div><h2>Trust the training<br><span class="gradient-text">that brought you here.</span></h2></div><p class="lead">Nerves don't mean you're not ready. They mean this matters to you. You can feel nervous and still move with courage.</p></div>
+  <div class="protocol-grid">
+    <div class="panel protocol-visual reveal"><div class="crosshair"><div class="target-inner">🥋</div></div><div class="target-caption">FOCUS LOCKED · YOUR MOMENT</div></div>
+    <div class="panel protocol-copy reveal"><div class="micro-label">PRE-MATCH PROTOCOL / 30 SECONDS</div><h3>One move at a time.</h3><p>Don't fight the entire tournament in your head before it even begins. Come back to the present. Listen to your coach, stay aware, respect your opponent and trust your preparation.</p><div class="protocol-lines"><div class="protocol-line"><b>01</b> Breathe. Let your shoulders drop.</div><div class="protocol-line"><b>02</b> Focus on the opponent in front of you.</div><div class="protocol-line"><b>03</b> Trust your training and stay adaptable.</div><div class="protocol-line"><b>04</b> Give your best. The result can take care of itself.</div></div><button class="btn primary" id="matchMessageBtn">Read before entering the mat <span>↗</span></button></div>
+  </div>
+  <div class="panel message-card reveal" style="margin-top:17px"><div class="micro-label">A LITTLE MESSAGE FROM YOUR COAT</div><blockquote>“You don't have to be fearless today. You just have to trust yourself enough to take the next step. I'm already proud of the courage it took to get you here.”</blockquote><p>Win or lose, medal or no medal, you will never have to earn my pride.</p></div>
+</div></section>
+
+<section class="section" id="reset"><div class="wrap">
+  <div class="section-head reveal"><div><div class="section-kicker">03 / RESET ZONE</div><h2>When your mind gets loud,<br><span class="gradient-text">come back to calm.</span></h2></div><p class="lead">A small pause is not giving up. Use this before your match, after a tiring day or whenever everything feels like too much.</p></div>
+  <div class="breath-layout">
+    <div class="panel breath-card reveal"><div class="breath-head"><div><h3>30-second reset</h3><p>Follow the orb. No rush. Just breathe comfortably.</p></div><span class="badge">CALM MODE</span></div><div class="breath-orb-wrap"><div class="breath-orb" id="breathOrb"><span id="breathWord">READY?</span></div></div><div class="breath-footer"><div class="breath-status" id="breathStatus">PAUSED · YOUR PACE</div><button class="btn small" id="breathBtn">Start breathing</button></div></div>
+    <div class="panel message-card reveal"><div class="micro-label">WHEN YOU FEEL NERVOUS</div><blockquote id="calmQuote">“Hey, Shunuu. Pause for a second. You don't have to figure everything out right now. Just take this one breath, then the next.”</blockquote><p id="calmSub">You're allowed to slow down. You're allowed to ask for a moment. You're doing enough by taking the next step.</p><button class="btn ghost small" id="newCalm" style="align-self:flex-start;margin-top:25px">Another reminder ↻</button></div>
+  </div>
+</div></section>
+
+<section class="section" id="outcomes"><div class="wrap">
+  <div class="section-head reveal"><div><div class="section-kicker">04 / NO-CONDITIONS PRIDE</div><h2>However tomorrow goes,<br><span class="gradient-text">I'm in your corner.</span></h2></div><p class="lead">Choose the ending that feels right. Every path leads to the same thing: you deserve kindness, rest and pride in the effort you gave.</p></div>
+  <div class="outcomes reveal">
+    <button class="outcome-btn" data-outcome="win"><span class="emoji">🏆</span><strong>I DID IT!</strong><small>For the day you come out smiling, proud and full of that victory energy.</small></button>
+    <button class="outcome-btn" data-outcome="tough"><span class="emoji">🌱</span><strong>IT WAS TOUGH.</strong><small>For the day that didn't go your way, but you still showed courage.</small></button>
+    <button class="outcome-btn" data-outcome="tired"><span class="emoji">☁️</span><strong>I'M EXHAUSTED.</strong><small>For the day when all you need is to breathe, eat, rest and be held by kind words.</small></button>
+  </div>
+  <div class="outcome-result" id="outcomeResult" aria-live="polite"><h3 id="outcomeTitle"></h3><p id="outcomeText"></p></div>
+</div></section>
+
+<section class="section" id="exams"><div class="wrap">
+  <div class="section-head reveal"><div><div class="section-kicker">05 / FINAL EXAM SURVIVAL SYSTEM</div><h2>New boss detected:<br><span class="gradient-text">question papers.</span></h2></div><p class="lead">Fighting and studying both take energy. Please don't turn preparation into punishment. Work steadily, take breaks and protect your sleep.</p></div>
+  <div class="toolkit-grid">
+    <div class="panel toolkit-main reveal"><div class="micro-label">FOCUS SESSION / YOUR OWN PACE</div><h3>One focused block.</h3><p>Choose a session, put distractions away and give that time your attention. When the timer ends, take a real break.</p><div class="timer-display" id="timerDisplay">25:00</div><div class="timer-label" id="timerLabel">FOCUS TIME</div><div class="timer-controls"><button class="btn primary small" id="timerStart">Start</button><button class="btn ghost small" id="timerReset">Reset</button></div><div class="timer-modes"><button class="timer-mode active" data-minutes="25" data-label="FOCUS TIME">25 MIN FOCUS</button><button class="timer-mode" data-minutes="5" data-label="SHORT BREAK">5 MIN BREAK</button><button class="timer-mode" data-minutes="15" data-label="LONG BREAK">15 MIN BREAK</button></div><p class="timer-note" id="timerNote">You don't have to finish everything in one sitting.</p></div>
+    <div class="toolkit-side reveal">
+      <article class="panel tool-tip"><div class="tip-icon">🧠</div><div><h4>Brain overheating?</h4><p>Step away for a few minutes. Stretch, drink water and return when you're ready.</p></div></article>
+      <article class="panel tool-tip"><div class="tip-icon">🛡</div><div><h4>Feeling overwhelmed?</h4><p>Write down just the next small task. Ignore the rest until that one is done.</p></div></article>
+      <article class="panel tool-tip"><div class="tip-icon">💧</div><div><h4>Forgot to look after yourself?</h4><p>Eat something, hydrate and give your body a chance to recover.</p></div></article>
+      <article class="panel tool-tip"><div class="tip-icon">🌙</div><div><h4>It's getting late?</h4><p>Rest is part of preparation. An exhausted brain is not a badge of honour.</p></div></article>
+    </div>
+  </div>
+</div></section>
+
+<section class="section" id="team"><div class="wrap">
+  <div class="section-head reveal"><div><div class="section-kicker">06 / CO-OP MODE</div><h2>Not just cheering for you.<br><span class="gradient-text">I'm in this too.</span></h2></div><p class="lead">You keep reminding me to focus on my exams. I hear you, and I'm taking that seriously. I want us both to show up for ourselves.</p></div>
+  <div class="team-banner reveal">
+    <div class="team-topline"><span class="team-label">DUO STATUS · ACTIVE</span><span class="badge">MUTUAL SUPPORT BONUS +∞</span></div>
+    <h2 class="team-title">TWO FIGHTERS.<br><span class="gradient-text">ONE TEAM.</span></h2>
+    <p class="team-sub">Different battles. Different arenas. The same wish for each other: to try our best, take care of ourselves and finish these days knowing we gave it an honest effort.</p>
+    <div class="versus"><div class="fighter-side"><span>PLAYER 01 / SHUNUU</span><strong>Your arena</strong><small>Taekwondo · Final exams · Rest</small></div><div class="vs">TEAM UP</div><div class="fighter-side"><span>PLAYER 02 / ME</span><strong>My arena</strong><small>My exams · Focus · Giving my best</small></div></div>
+    <p class="team-foot"><strong>My promise to you:</strong> I'll put in the work for my exams too. You focus on your missions, I'll focus on mine, and we'll keep cheering each other on. No competition. Just us.</p>
+  </div>
+</div></section>
+
+<section class="section" id="powerups"><div class="wrap">
+  <div class="section-head reveal"><div><div class="section-kicker">07 / INVENTORY</div><h2>Choose a little<br><span class="gradient-text">power-up.</span></h2></div><p class="lead">Tap whichever one you need right now. Different days need different kinds of strength.</p></div>
+  <div class="power-grid stagger">
+    <button class="power-card shine-card reveal" data-power="confidence" style="--i:0"><span class="power-ico">⚡</span><h3>Confidence +100</h3><p>For when you forget how much you've already done.</p></button>
+    <button class="power-card shine-card reveal" data-power="shield" style="--i:1"><span class="power-ico">🛡</span><h3>Stress Shield</h3><p>For when pressure starts getting too loud.</p></button>
+    <button class="power-card shine-card reveal" data-power="energy" style="--i:2"><span class="power-ico">☀️</span><h3>Energy Boost</h3><p>For when you need a tiny smile and a little spark.</p></button>
+    <button class="power-card shine-card reveal" data-power="rest" style="--i:3"><span class="power-ico">🌙</span><h3>Rest Mode</h3><p>For when your body is asking you to slow down.</p></button>
+    <button class="power-card shine-card reveal" data-power="hug" style="--i:4"><span class="power-ico">🫂</span><h3>Emergency Hug</h3><p>For when you wish I could be right there.</p></button>
+    <button class="power-card shine-card reveal" data-power="love" style="--i:5"><span class="power-ico">♡</span><h3>Unlimited Love</h3><p>For absolutely no reason. You can always use this one.</p></button>
+  </div>
+  <div class="power-result" id="powerResult" aria-live="polite">Your power-up will appear here. Pick one, fighter.</div>
+</div></section>
+
+<section class="section" id="arcade"><div class="wrap">
+  <div class="section-head reveal"><div><div class="section-kicker">08 / OPTIONAL SIDE QUEST</div><h2>A tiny break from<br><span class="gradient-text">being so responsible.</span></h2></div><p class="lead">A little 30-second arcade break. No grades, no medals, no pressure. Just collect the stars.</p></div>
+  <div class="arcade-layout">
+    <div class="panel game-panel reveal"><div class="game-top"><h3>STAR RUNNER</h3><div class="score">STARS <span id="score">0</span> / 5</div></div><canvas id="gameCanvas" width="700" height="330" aria-label="Mini game: move the glowing player to collect stars and avoid falling stress blocks"></canvas><div class="game-controls"><span>Move with ← → / A D or drag on the screen.</span><button class="btn small" id="gameStart">Start side quest</button></div></div>
+    <div class="panel game-copy reveal"><div class="micro-label">SIDE QUEST RULES</div><h3>Collect five stars.<br>Leave the stress behind.</h3><p>Move the little light left and right. Catch the glowing stars and avoid the falling red blocks. You can try again as many times as you like.</p><p class="mini-note">A tiny reminder: breaks are allowed. Come back to your work when you're ready.</p><button class="btn ghost small" id="gameReset" style="align-self:flex-start">Reset game ↻</button></div>
+  </div>
+</div></section>
+
+<section class="section" id="letters"><div class="wrap">
+  <div class="section-head reveal"><div><div class="section-kicker">09 / LITTLE ENVELOPES</div><h2>Things I want you<br><span class="gradient-text">to remember.</span></h2></div><p class="lead">Open whichever envelope you need. I put a few thoughts here for the days when you might need to hear them.</p></div>
+  <div class="letter-grid reveal">
+    <button class="letter-card" data-letter="admire"><span class="letter-no">NOTE 001 / WHAT I ADMIRE</span><h3>The strength I see in you</h3><p>Open when you need to remember who you are.</p></button>
+    <button class="letter-card" data-letter="sidelines"><span class="letter-no">NOTE 002 / IF I COULD</span><h3>If I could be there tomorrow</h3><p>Open before you step onto the mat.</p></button>
+    <button class="letter-card" data-letter="exams"><span class="letter-no">NOTE 003 / FOR FINALS</span><h3>One paper at a time</h3><p>Open when the syllabus feels too big.</p></button>
+    <button class="letter-card" data-letter="us"><span class="letter-no">NOTE 004 / JUST US</span><h3>My favourite teammate</h3><p>Open when you need a little reminder of us.</p></button>
+  </div>
+</div></section>
+
+<section class="final-section"><div class="wrap"><div class="final-box reveal">
+  <div class="section-kicker" style="justify-content:center">FINAL TRANSMISSION / FROM YOUR COAT</div>
+  <h2><span class="gradient-text">YOU'VE GOT THIS,</span><br>MY GIRL.</h2>
+  <p class="final-letter">My Shunuu,<br><br>Tomorrow, go out there and give your fight your best. From the 23rd, take your exams one paper at a time. Don't let one difficult moment make you forget all the effort you've put in. And please remember to look after yourself in between.<br><br>I'm proud of the fighter in you, the determined student in you, and the silly, sweet, wonderfully chaotic you I get to love. I wish I could be there to cheer for you, but until I can, I hope this little corner of the internet makes you feel a bit less alone and a whole lot more supported.<br><br>And yes, I'm going to focus on my exams too. I'll give them my best. You keep your promise to yourself, and I'll keep mine. We'll do our own work, then celebrate each other's effort.<br><br>You don't have to be extraordinary every second. You just have to be you. That's already someone worth cheering for.</p>
+  <div class="final-sign">Your biggest cheerleader, your annoying COAT.</div>
+  <div class="end-code">TRANSMISSION COMPLETE · TEAM STATUS: ALWAYS ON YOUR SIDE</div>
+  <button class="btn primary" id="finalConfetti" style="margin-top:30px">Send a little celebration ✦</button>
+</div></div></section>
+</main>
+<footer class="footer">MADE WITH CARE · <strong>FOR SHUNUU</strong> · TWO FIGHTERS, ONE TEAM</footer>
+
+<button class="secret-star" id="secretStar" aria-label="A tiny secret" title="A tiny secret">✦</button>
+<div class="letter-modal" id="letterModal" role="dialog" aria-modal="true" aria-labelledby="letterTitle"><div class="letter-paper"><button class="icon-btn close" id="closeLetter" aria-label="Close message">✕</button><div class="micro-label" id="letterLabel">A NOTE FOR YOU</div><h3 id="letterTitle"></h3><p id="letterText"></p><p class="letter-sign">— your COAT ♡</p></div></div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(() => {
+  const $ = (s, root=document) => root.querySelector(s);
+  const $$ = (s, root=document) => [...root.querySelectorAll(s)];
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const toast = (msg) => { const el=$('#toast'); el.textContent=msg; el.classList.add('show'); clearTimeout(toast.t); toast.t=setTimeout(()=>el.classList.remove('show'),2400); };
+
+  // Welcome + cinematic entry
+  $('#enterBtn').addEventListener('click',()=>{ $('#intro').classList.add('out'); document.body.classList.add('entered'); window.setTimeout(()=>$('#home').scrollIntoView({behavior:reduced?'auto':'smooth'}),180); soundTick(520,.07); });
+
+  // Page progress + pointer glow
+  const progress=$('#progress');
+  const updateProgress=()=>{const max=document.documentElement.scrollHeight-innerHeight;progress.style.width=(max>0?(scrollY/max)*100:0)+'%';};
+  addEventListener('scroll',updateProgress,{passive:true}); updateProgress();
+  addEventListener('pointermove',e=>{document.documentElement.style.setProperty('--mx',e.clientX+'px');document.documentElement.style.setProperty('--my',e.clientY+'px');});
+
+  // Scroll reveal + staggered entry
+  const revealEls=$$('.reveal');
+  if('IntersectionObserver' in window && !reduced){const io=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('in');io.unobserve(entry.target);}}),{threshold:.12});revealEls.forEach(el=>io.observe(el));}
+  else revealEls.forEach(el=>el.classList.add('in'));
+
+  // Interactive nav and mobile menu
+  const nav=$('#nav'); $('#menuBtn').addEventListener('click',()=>nav.classList.toggle('open'));
+  $$('#nav a').forEach(a=>a.addEventListener('click',()=>nav.classList.remove('open')));
+  $$('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{const target=$(a.getAttribute('href'));if(!target)return;e.preventDefault();if(!reduced){$('#wipe').classList.remove('go');void $('#wipe').offsetWidth;$('#wipe').classList.add('go');}setTimeout(()=>target.scrollIntoView({behavior:reduced?'auto':'smooth'}),reduced?0:190);}));
+
+  // Card lighting + tilt
+  $$('.shine-card').forEach(card=>{
+    card.addEventListener('pointermove',e=>{const r=card.getBoundingClientRect();const x=e.clientX-r.left,y=e.clientY-r.top;card.style.setProperty('--card-x',x+'px');card.style.setProperty('--card-y',y+'px');if(e.pointerType==='mouse'&&!reduced){const rx=((y/r.height)-.5)*-4,ry=((x/r.width)-.5)*4;card.style.transform=`perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-3px)`;}});
+    card.addEventListener('pointerleave',()=>{card.style.transform='';});
+  });
+  $$('.magnetic').forEach(btn=>{btn.addEventListener('pointermove',e=>{if(reduced||e.pointerType!=='mouse')return;const r=btn.getBoundingClientRect();btn.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.07}px,${(e.clientY-r.top-r.height/2)*.1-2}px)`;});btn.addEventListener('pointerleave',()=>btn.style.transform='');});
+
+  // Optional subtle sound: no autoplay. Only short synthesized tones after user enables it.
+  let soundOn=false,audioCtx=null;
+  function soundTick(freq=440,duration=.055){if(!soundOn)return;try{audioCtx=audioCtx||new(window.AudioContext||window.webkitAudioContext)();const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type='sine';o.frequency.value=freq;g.gain.setValueAtTime(.025,audioCtx.currentTime);g.gain.exponentialRampToValueAtTime(.0001,audioCtx.currentTime+duration);o.connect(g);g.connect(audioCtx.destination);o.start();o.stop(audioCtx.currentTime+duration);}catch(e){}}
+  $('#soundBtn').addEventListener('click',()=>{soundOn=!soundOn;$('#soundBtn').textContent=soundOn?'♫':'♪';$('#soundBtn').title=soundOn?'Sound effects on':'Sound effects off';toast(soundOn?'Tiny sound effects enabled':'Sound effects muted');if(soundOn)soundTick(660,.1);});
+
+  // Pre-match message modal uses a special reusable overlay.
+  const letterData={
+    match:{label:'READ BEFORE YOU ENTER THE MAT',title:'This is your moment.',text:'Hey, my fighter. Take one breath. Feel your feet on the ground. Remember the training, the repetition and the work that brought you here. You do not need to be perfect. Stay present, listen, adapt and give your best. Whatever happens, walk away knowing you showed up with courage. I am cheering for you with my whole heart.'},
+    admire:{label:'NOTE 001 / WHAT I ADMIRE',title:'The strength I see in you',text:'I admire how you keep showing up. Your calisthenics, your Taekwondo, your discipline and the way you keep challenging yourself are all beautiful to see. But I do not admire you only for the things you can do. I admire your heart, your humour, your energy and the person you are when nobody is watching. Please do not reduce your worth to a result or a performance.'},
+    sidelines:{label:'NOTE 002 / IF I COULD',title:'If I could be there tomorrow',text:'I would be the one cheering a little too loudly, probably making you laugh at the wrong moment and trying to remind you to breathe. I wish I could see you step onto that mat and tell you in person how proud I am. Since I cannot be beside you, take this message as a pocket-sized cheer from me. Imagine me in your corner, always rooting for you.'},
+    exams:{label:'NOTE 003 / FOR FINALS',title:'One paper at a time',text:'When the syllabus starts looking impossible, shrink the task. Pick one topic. Understand it. Take a short break. Then choose the next one. You do not have to be productive every minute, and you do not have to punish yourself for getting tired. Please sleep, eat and take care of that brilliant brain. One paper at a time, okay? I believe in you.'},
+    us:{label:'NOTE 004 / JUST US',title:'My favourite teammate',text:'I love that we want good things for each other. You remind me to focus on my exams, and I want you to know I am listening. I will put in my best effort too. We have our own responsibilities and our own difficult days, but we can still be each others safe place and loudest cheerleaders. No race between us. Just two people growing, learning and choosing to support each other.'},
+    secret:{label:'HIDDEN TRANSMISSION / ONLY FOR YOU',title:'Psst… one more thing.',text:'If you found this little star, you found a tiny secret. Here is the secret: even on days when you do not feel strong, impressive, productive or particularly confident, you are still loved. You do not have to win anything, score anything or achieve anything to deserve gentleness. I hope you never forget that. Also… COAT loves you. A lot. Like, ridiculously a lot.'}
+  };
+  const modal=$('#letterModal');
+  function openLetter(key){const d=letterData[key];$('#letterLabel').textContent=d.label;$('#letterTitle').textContent=d.title;$('#letterText').textContent=d.text;modal.classList.add('show');document.body.style.overflow='hidden';soundTick(580,.08);}
+  function closeLetter(){modal.classList.remove('show');document.body.style.overflow='';}
+  $$('#letters .letter-card').forEach(b=>b.addEventListener('click',()=>openLetter(b.dataset.letter)));
+  $('#matchMessageBtn').addEventListener('click',()=>openLetter('match'));
+  $('#closeLetter').addEventListener('click',closeLetter);modal.addEventListener('click',e=>{if(e.target===modal)closeLetter();});addEventListener('keydown',e=>{if(e.key==='Escape')closeLetter();});
+  let secretTaps=0,secretTimer;$('#secretStar').addEventListener('click',()=>{secretTaps++;clearTimeout(secretTimer);secretTimer=setTimeout(()=>secretTaps=0,5000);if(secretTaps>=2){secretTaps=0;openLetter('secret');}else toast('A little star is hiding something… tap once more ✦');});
+
+  // Breathing orb: 4 seconds in, 2 gentle pause, 6 out; user can stop anytime.
+  const phases=[{name:'BREATHE IN',cls:'inhale',ms:4000},{name:'HOLD GENTLY',cls:'hold',ms:2000},{name:'BREATHE OUT',cls:'exhale',ms:6000}];
+  let breathRunning=false,breathTimer=null,breathEnd=0,breathStart=0,phaseIndex=0;
+  function breathPhase(){if(!breathRunning)return;clearInterval(breathTimer);const p=phases[phaseIndex];$('#breathWord').textContent=p.name;$('#breathStatus').textContent=p.name+' · '+Math.ceil(p.ms/1000)+' SEC';$('#breathOrb').className='breath-orb '+p.cls;breathEnd=Date.now()+p.ms;const tick=()=>{if(!breathRunning)return;const left=breathEnd-Date.now();$('#breathStatus').textContent=p.name+' · '+Math.max(0,Math.ceil(left/1000))+' SEC';if(Date.now()-breathStart>=30000){breathRunning=false;clearInterval(breathTimer);$('#breathOrb').className='breath-orb';$('#breathWord').textContent='DONE';$('#breathStatus').textContent='RESET COMPLETE · WELL DONE';$('#breathBtn').textContent='Start again';return;}if(left<=0){phaseIndex=(phaseIndex+1)%phases.length;breathPhase();}};tick();breathTimer=setInterval(tick,200);}
+  $('#breathBtn').addEventListener('click',()=>{if(breathRunning){breathRunning=false;clearInterval(breathTimer);$('#breathOrb').className='breath-orb';$('#breathWord').textContent='READY?';$('#breathStatus').textContent='PAUSED · YOUR PACE';$('#breathBtn').textContent='Start breathing';}else{breathRunning=true;breathStart=Date.now();phaseIndex=0;$('#breathBtn').textContent='Pause reset';breathPhase();}});
+  const calmMessages=[['“You do not need to solve the whole day right now. Just take this one breath, then the next.”','Come back to the moment you are in. That is enough for now.'],['“Nerves can come along for the ride. They do not get to hold the steering wheel.”','Feel your feet, loosen your shoulders and take your next step.'],['“A difficult moment is not a prediction of the whole day.”','You can reset, regroup and begin again.'],['“You have permission to pause without calling it failure.”','Rest and recovery are part of doing your best.']];
+  $('#newCalm').addEventListener('click',()=>{const m=calmMessages[Math.floor(Math.random()*calmMessages.length)];$('#calmQuote').textContent=m[0];$('#calmSub').textContent=m[1];soundTick(520,.06);});
+
+  // Three outcome paths all return to unconditional support.
+  const outcomes={win:['YOU DID THAT, MY GIRL!','Celebrate the work, the courage and the moment. Let yourself feel proud. Enjoy your win, take a breath and recover too. And yes, your COAT is doing an imaginary victory dance right now.'],tough:['I AM STILL SO PROUD OF YOU.','A tough result cannot erase the training, courage or effort you brought with you. Take what you can learn, be kind to yourself and let the day settle. You are not a result.'],tired:['REST, MY FIGHTER.','You gave energy to something that mattered. Now let yourself recover. Eat, hydrate, get comfortable and sleep if you can. You do not owe anyone a performance tonight. I am proud of you, with no conditions attached.']};
+  $$('.outcome-btn').forEach(b=>b.addEventListener('click',()=>{$$('.outcome-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');const [t,p]=outcomes[b.dataset.outcome];$('#outcomeTitle').textContent=t;$('#outcomeText').textContent=p;$('#outcomeResult').classList.add('show');soundTick(620,.08);if(b.dataset.outcome==='win')confetti(55);}));
+
+  // Focus timer, start/pause/reset with focus and break modes.
+  let timerTotal=25*60,timerLeft=timerTotal,timerInterval=null,timerRunning=false,timerLabel='FOCUS TIME';
+  const fmt=s=>String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');
+  function renderTimer(){$('#timerDisplay').textContent=fmt(timerLeft);$('#timerLabel').textContent=timerLabel;$('#timerStart').textContent=timerRunning?'Pause':'Start';}
+  function stopTimer(){clearInterval(timerInterval);timerInterval=null;timerRunning=false;renderTimer();}
+  $('#timerStart').addEventListener('click',()=>{if(timerRunning){stopTimer();return;}timerRunning=true;renderTimer();timerInterval=setInterval(()=>{timerLeft--;renderTimer();if(timerLeft<=0){stopTimer();$('#timerNote').textContent=timerLabel==='FOCUS TIME'?'Focus block complete. Take a proper break.':'Break complete. Return when you feel ready.';toast(timerLabel==='FOCUS TIME'?'Focus session complete. Well done!':'Break finished. You got this.');soundTick(740,.12);confetti(22);}},1000);});
+  $('#timerReset').addEventListener('click',()=>{stopTimer();timerLeft=timerTotal;renderTimer();$('#timerNote').textContent='Timer reset. Start whenever you are ready.';});
+  $$('.timer-mode').forEach(b=>b.addEventListener('click',()=>{$$('.timer-mode').forEach(x=>x.classList.remove('active'));b.classList.add('active');stopTimer();timerTotal=Number(b.dataset.minutes)*60;timerLeft=timerTotal;timerLabel=b.dataset.label;renderTimer();$('#timerNote').textContent=timerLabel==='FOCUS TIME'?'You do not have to finish everything in one sitting.':'Take a breath, stretch and let your mind rest.';}));renderTimer();
+
+  // Clickable encouragement power-ups.
+  const powerMessages={confidence:'Remember what you have already done. You have trained, practised, learned and kept going. Trust the person you have worked to become.',shield:'Pressure is loud, but it is not always right. Come back to one task, one breath and one moment. You can handle the next step.',energy:'Emergency reminder: you are a whole champion and also a certified little goofball. Please smile at least once today. Your COAT says so.',rest:'Rest is not laziness. Your body and mind need recovery. Take a break without guilt; you can return afterwards.',hug:'Imagine the biggest, safest hug. No advice, no expectations, no need to explain anything. Just a hug and a reminder that I am cheering for you.',love:'This one has no conditions, no score and no expiry. I love you on tournament days, exam days, sleepy days, messy days and ordinary days too.'};
+  $$('.power-card').forEach(b=>b.addEventListener('click',()=>{$('#powerResult').textContent=powerMessages[b.dataset.power];b.animate([{transform:'scale(1)'},{transform:'scale(.97)'},{transform:'scale(1)'}],{duration:250});soundTick(600,.07);}));
+
+  // Mini-game canvas: catch stars, avoid falling red blocks. Supports keyboard, mouse and touch.
+  const canvas=$('#gameCanvas'),ctx=canvas.getContext('2d');let game={active:false,score:0,x:350,objects:[],last:0,raf:0,keys:{},spawn:0,won:false};
+  const W=700,H=330;function fitGame(){const r=canvas.getBoundingClientRect();const dpr=Math.min(devicePixelRatio||1,2);canvas.width=Math.round(r.width*dpr);canvas.height=Math.round(r.height*dpr);ctx.setTransform(canvas.width/W,0,0,canvas.height/H,0,0);drawIdle();}function drawIdle(){ctx.clearRect(0,0,W,H);ctx.fillStyle='rgba(109,232,239,.04)';for(let x=0;x<W;x+=35){ctx.fillRect(x,0,1,H);}for(let y=0;y<H;y+=35){ctx.fillRect(0,y,W,1);}ctx.fillStyle='#8da2bd';ctx.font='700 15px ui-monospace,monospace';ctx.textAlign='center';ctx.fillText('PRESS “START SIDE QUEST” TO PLAY',W/2,H/2);ctx.fillStyle='#6de8ef';ctx.font='12px ui-monospace,monospace';ctx.fillText('CATCH 5 STARS  ·  AVOID THE RED BLOCKS',W/2,H/2+28);}
+  function addObject(){const star=Math.random()>.34;game.objects.push({x:35+Math.random()*(W-70),y:-20,star,r:star?9:12,speed:star?1.55+Math.random()*.9:1.8+Math.random()*1.2,rot:Math.random()*6});}
+  function gameDraw(){ctx.clearRect(0,0,W,H);const grad=ctx.createLinearGradient(0,0,0,H);grad.addColorStop(0,'#0a1423');grad.addColorStop(1,'#101c2d');ctx.fillStyle=grad;ctx.fillRect(0,0,W,H);ctx.strokeStyle='rgba(109,232,239,.075)';ctx.lineWidth=1;for(let x=0;x<W;x+=35){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}for(let y=0;y<H;y+=35){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+    game.objects.forEach(o=>{ctx.save();ctx.translate(o.x,o.y);ctx.rotate(o.rot);ctx.shadowBlur=16;ctx.shadowColor=o.star?'#6de8ef':'#ff4669';ctx.fillStyle=o.star?'#a9ffff':'#ff4669';if(o.star){ctx.beginPath();for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5,r=i%2?o.r*.44:o.r;ctx.lineTo(Math.cos(a)*r,Math.sin(a)*r);}ctx.closePath();ctx.fill();}else{ctx.beginPath();ctx.roundRect(-o.r,-o.r,o.r*2,o.r*2,4);ctx.fill();}ctx.restore();});
+    // Player glow
+    ctx.save();ctx.shadowBlur=24;ctx.shadowColor='#6de8ef';ctx.fillStyle='#d5ffff';ctx.beginPath();ctx.arc(game.x,H-30,12,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#6de8ef';ctx.lineWidth=2;ctx.beginPath();ctx.arc(game.x,H-30,19,0,Math.PI*2);ctx.stroke();ctx.restore();
+    ctx.fillStyle='#a6b5ca';ctx.font='700 12px ui-monospace,monospace';ctx.textAlign='left';ctx.fillText('STARS '+game.score+'/5',18,24);
+  }
+  function endGame(win){game.active=false;cancelAnimationFrame(game.raf);gameDraw();ctx.fillStyle='rgba(4,8,15,.76)';ctx.fillRect(0,0,W,H);ctx.textAlign='center';ctx.fillStyle=win?'#9fffff':'#ff99aa';ctx.font='800 27px system-ui';ctx.fillText(win?'SIDE QUEST CLEARED!':'SIDE QUEST OVER',W/2,H/2-6);ctx.fillStyle='#d1dbea';ctx.font='13px ui-monospace,monospace';ctx.fillText(win?'Five stars collected. Tiny break well earned.':'Give it another go whenever you like.',W/2,H/2+24);$('#gameStart').textContent='Play again';if(win){confetti(35);toast('Side quest cleared! Nice one.');}}
+  function loop(now){if(!game.active)return;const dt=Math.min((now-game.last)/16.67||1,2);game.last=now;game.spawn+=dt;if(game.spawn>29){addObject();game.spawn=0;}if(game.keys.ArrowLeft||game.keys.a||game.keys.A)game.x-=5.2*dt;if(game.keys.ArrowRight||game.keys.d||game.keys.D)game.x+=5.2*dt;game.x=Math.max(20,Math.min(W-20,game.x));game.objects.forEach(o=>{o.y+=o.speed*dt;o.rot+=.025*dt;});
+    let hit=false;game.objects=game.objects.filter(o=>{if(Math.abs(o.x-game.x)<o.r+15&&Math.abs(o.y-(H-30))<o.r+14){if(o.star){game.score++;$('#score').textContent=String(game.score);soundTick(680,.04);if(game.score>=5){gameDraw();endGame(true);return false;}}else hit=true;return false;}return o.y<H+30;});gameDraw();if(hit){endGame(false);return;}game.raf=requestAnimationFrame(loop);}
+  function startGame(){cancelAnimationFrame(game.raf);game={...game,active:true,score:0,x:350,objects:[],last:performance.now(),spawn:0,won:false};$('#score').textContent='0';$('#gameStart').textContent='Restart';game.raf=requestAnimationFrame(loop);}
+  $('#gameStart').addEventListener('click',startGame);$('#gameReset').addEventListener('click',()=>{game.active=false;cancelAnimationFrame(game.raf);game={...game,score:0,objects:[],x:350};$('#score').textContent='0';$('#gameStart').textContent='Start side quest';drawIdle();});
+  addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight'].includes(e.key)){game.keys[e.key]=true;if(game.active)e.preventDefault();}if(['a','A','d','D'].includes(e.key))game.keys[e.key]=true;});addEventListener('keyup',e=>{game.keys[e.key]=false;});
+  let dragging=false;canvas.addEventListener('pointerdown',e=>{dragging=true;canvas.setPointerCapture(e.pointerId);moveGamePointer(e);});canvas.addEventListener('pointermove',e=>{if(dragging)moveGamePointer(e);});canvas.addEventListener('pointerup',()=>dragging=false);canvas.addEventListener('pointercancel',()=>dragging=false);
+  function moveGamePointer(e){const r=canvas.getBoundingClientRect();game.x=Math.max(20,Math.min(W-20,(e.clientX-r.left)/r.width*W));}
+  if('ResizeObserver' in window)new ResizeObserver(fitGame).observe(canvas);else addEventListener('resize',fitGame);fitGame();
+
+  // Confetti bursts for small celebrations.
+  function confetti(n=35){if(reduced)return;const colors=['#6de8ef','#ff4669','#ffd58a','#8ca5ff','#ffffff'];for(let i=0;i<n;i++){const el=document.createElement('i');el.className='confetti';el.style.left=Math.random()*100+'vw';el.style.background=colors[Math.floor(Math.random()*colors.length)];el.style.setProperty('--dx',(Math.random()*260-130)+'px');el.style.setProperty('--dur',(1.6+Math.random()*1.8)+'s');el.style.setProperty('--rot',(Math.random()*180)+'deg');el.style.borderRadius=Math.random()>.5?'50%':'2px';document.body.appendChild(el);setTimeout(()=>el.remove(),3800);}}
+  $('#finalConfetti').addEventListener('click',()=>{confetti(100);toast('A little celebration, just for you. ✦');soundTick(820,.12);});
+})();
+</script>
+</body>
+</html>
